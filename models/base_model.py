@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-this is the parent clas for the whole program
+This is the patennt class
 """
 import uuid
 import datetime
@@ -16,7 +16,7 @@ class BaseModel:
         """
         self.id = str(uuid4())
         self.created_at = datetime.utcnow()
-        self.updated_at = datetime.utcnow()
+        self.updated_at = self.created_at()
 
     def save(self):
         """
@@ -39,8 +39,4 @@ class BaseModel:
         usedd to decaire how the output is going to be like after printing
         """
         class_name = self.__class__.__name__
-        return (f"{class_name}, {self.id}, {self.__dict__}")
-
-
-if __name__ == '__main___':
-    my_model = BaseModel()
+        return (f"[{class_name}],( {self.id}), {self.__dict__}")
