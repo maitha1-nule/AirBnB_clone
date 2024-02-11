@@ -1,6 +1,14 @@
 #!/usr/bin/python3
 """
-this is the parent clas for the whole program
+Module for the Base Class
+- Public instance attributes
+    - id
+    - created_at
+    - updated_at
+- Public instance methods
+    - save(self) - updates the updated_at attribute
+    - to_dict(self) - returns dictionary
+- __str__ method to print
 """
 import sys
 import uuid
@@ -11,10 +19,40 @@ class BaseModel:
     """
     This is the main class in the program
     """
-    id = str(uuid.uuid4())
-    created_at = datetime.now()
-    updated_at = datetime.now()
+    def __init__(self, *args, **kwargs):
+        """
+        Initialiazes new instance of BaseModel.
 
+        Args:
+            *args: Unused positional arguments
+            **kwargs: Dictionary representation of an instance.
+
+        If kwargs is not empty:
+            Each key has an attribute name
+            Each value is the value of the corresponding attr name
+            Convert datetime to datetime objects
+
+        Otherwise:
+            Create id and created_at values as initially done
+        """
+        if kwargs:
+            if '__class__' in kwargs:
+                # Remove '__class__' from the dictionary
+                del kwargs['__class__']
+            if 'created_at' in kwargs:
+                kwargs['created_at'] = datetime.strptime(
+                        kwargs['created_at'], '%Y-%m-%dT%H:%M:%S.%f')
+            if 'updated_at' in kwargs:
+                kwargs['updated_at'] = datetime.strptime(
+                        kwargs['updated_at'], '%Y-%m-%dT%H:%M:%S.%f')
+
+            for key, value in kwargs.items():
+                setattr(self, key, value)
+
+        else:
+            self.id = str(uuid.uuid4())
+            self.created_at = datetime.now()
+            self.updated_at = datetime.now()
     def save(self):
         """
         used to save the updated instance
