@@ -2,27 +2,24 @@
 """
 this is the parent clas for the whole program
 """
+import sys
 import uuid
-import datetime
+from datetime import datetime
 
 
 class BaseModel:
     """
     This is the main class in the program
     """
-    def __init__(self):
-        """"
-        Initializaation of the parent ainit
-        """
-        self.id = str(uuid4())
-        self.created_at = datetime.utcnow()
-        self.updated_at = datetime.utcnow()
+    id = str(uuid.uuid4())
+    created_at = datetime.now()
+    updated_at = datetime.now()
 
     def save(self):
         """
         used to save the updated instance
         """
-        self.updated_at = datetime.utcnow()
+        self.updated_at = datetime.now()
 
     def to_dict(self):
         """
@@ -41,6 +38,6 @@ class BaseModel:
         class_name = self.__class__.__name__
         return (f"{class_name}, {self.id}, {self.__dict__}")
 
-
-if __name__ == '__main___':
+if __name__ == '__main__':
     my_model = BaseModel()
+
