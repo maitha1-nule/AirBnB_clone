@@ -1,6 +1,17 @@
 #!/usr/bin/python3
 """
-This is the patennt class
+This is the parent class of the program.
+Public Instance Atr:
+     id(str)
+     created_at(datetime)
+    updated_at(datetime)
+
+Public Instance methods:
+    __str__: which returns [<class name>]
+    (<self.id>) <self.__dict__>
+    _to__dict__: whic returns a dict repsentation
+    of the created and updated at instances
+    save: which updates the instance created at.
 """
 import uuid
 import datetime
@@ -8,35 +19,30 @@ import datetime
 
 class BaseModel:
     """
-    This is the main class in the program
+    This is the parent class of the entire program
     """
+
     def __init__(self):
-        """"
-        Initializaation of the parent ainit
-        """
-        self.id = str(uuid4())
+        """Dunder init constructor for all the functions"""
+        self.id = str(uuid.uuid4())
         self.created_at = datetime.utcnow()
-        self.updated_at = self.created_at()
-
-    def save(self):
-        """
-        used to save the updated instance
-        """
-        self.updated_at = datetime.utcnow()
-
-    def to_dict(self):
-        """
-        used to serialize the objects after being entered
-        """
-        inst_dict = self.__dict__.copy()
-        inst_dict["__class__"] = self.__class__.__name__
-        inst_dict["created_at"] = self.created_at.isoformat()
-        inst_dict["updated_at"] = self.updated_at.isoformat()
-        return inst_dict
+        self.updated_at = self.created_at
 
     def __str__(self):
         """
-        usedd to decaire how the output is going to be like after printing
+        This method is used to more like declare how values are
+        returned
         """
         class_name = self.__class__.__name__
-        return (f"[{class_name}],( {self.id}), {self.__dict__}")
+        return f"[{class_name}] ({self.id}) {self.__dict__}"
+
+    def to_dict(self):
+        """
+        This method will be used to serialize our values
+        after they have been entered by a user, implemented
+        """
+        inst_dict = self.__dict__.copy()
+        inst_dict['__class__'] = self.__clas__.__main__
+        inst_dict[created_at] = self.created_at.isoformat()
+        inst_dict[updated_at] = self.updated_at.isoformat()
+        return inst_dict
