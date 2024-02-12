@@ -14,7 +14,7 @@ Public Instance methods:
     save: which updates the instance created at.
 """
 import uuid
-import datetime
+from datetime import datetime
 
 
 class BaseModel:
@@ -36,6 +36,13 @@ class BaseModel:
             self.created_at = datetime.utcnow()
             self.updated_at = self.created_at
 
+    def save(self):
+        """
+        This is the method that i going to  update the
+        update_time
+        """
+        self.update_at = datetime.utcnow()
+
     def __str__(self):
         """
         This method is used to more like declare how values are
@@ -50,7 +57,7 @@ class BaseModel:
         after they have been entered by a user, implemented
         """
         inst_dict = self.__dict__.copy()
-        inst_dict['__class__'] = self.__clas__.__main__
+        inst_dict['__class__'] = self.__class__.__name__
         inst_dict['created_at'] = self.created_at.isoformat()
         inst_dict['updated_at'] = self.updated_at.isoformat()
         return inst_dict
