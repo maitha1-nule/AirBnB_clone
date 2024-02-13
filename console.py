@@ -26,6 +26,20 @@ class HBNBCommand(cmd.Cmd):
         """Useful whenever a user preses enter without a command"""
         self.lastcmd = " "
 
+    def do_create(self, line):
+        """
+        useful whenver we want to cerate a new instance of the base
+        class model
+        """
+        new_base = BaseModel()
+        if not line:
+            print("** class name missing **")
+        elif line is not "BaseModel":
+            print("** class doesn't exist **")
+        else:
+            new_base.save()
+            print(new_base.id())
+
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
